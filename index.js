@@ -4,7 +4,7 @@
 //FINAL PROJECT
   const express = require('express');
   const nedb = require("nedb-promises");
-  const bcrypt = require('bcrypt');
+  const bcrypt = require('bcryptjs');
   const jwt = require('jsonwebtoken');
 
 
