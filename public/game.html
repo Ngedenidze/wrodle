@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="game_css.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+    </head>
+<body>
+    <div>
+        <div id="main">
+            
+            
+            
+            
+            
+            <div id="homeScreen" class="hidden">
+                    <input type="checkbox" id="darkmode-toggle" />
+                    <label for="darkmode-toggle"></label>
+                    <!-- root container -->
+                    <div class="root blured" id="root">
+                        <!-- top options bar -->
+                        <div id="option-container"> 
+                            <button id="open">Settings</button>
+                            <button onclick="restart_the_game()" onblur="this.blur()" id="restart">Restart</button>
+                        </div>
+                        
+                        <!-- main container for game -->
+                        <div class="main-container">
+
+                            <!-- defined div for game -->
+                            <div class="game-container" id="game_container">
+
+                                <!-- rows to keep squares inside -->
+                                <div class="row" id="row1">
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                </div>
+                                <div class="row" id="row2">
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                </div>
+                                <div class="row" id="row3">
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                </div>
+                                <div class="row" id="row4">
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="
+                                        1">
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                </div>
+                                <div class="row" id="row5">
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter ">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter ">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                    <div class="letter">
+                                        <input oninput="this.value = this.value.toUpperCase()" type="text" name="field"
+                                            maxlength="1" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <span id="error"></span>
+                        </div>
+                    </div>
+                    <div class="modal_container popup" id="modal_container">
+                        <div class="modal_popup">
+                            <div>
+                                <h1 class="modal_heading">Wrodle not Wordle</h1>
+                                Welcome <span id="name"></span>!
+                                <div>
+                                    Click <a href="#" id="logoutLink">here</a> to log out.
+                                </div>
+                                <hr>
+                                
+                                Username: <span id="username"></span>
+                                <br>
+                                Name: <input type="text" id="updateName">
+                                <br>
+                                Email: <input type="email" id="updateEmail">
+                                <br>
+                                <span></span>
+                                <button id="updateBtn">Update My Information</button>
+                                <span></span>
+                                <button id="deleteBtn" class="critical">Delete My Profile</button>
+                            </div>
+                            <p>
+                                Rules are simple:
+                                <br>
+                                1. Try guessing the secret word!
+                                <br>
+                                2. If you guess the correct letter in the word, it will appear yellow;
+                                <br>
+                                3. If you guess the correct letter in the correct place of the word, it will appear in
+                                green;
+                                <br>
+                                4. You have only 5 tries to guess the secret word;
+                                <br>
+                            </p>
+                            <br>
+                            <h2>Good luck!</h2>
+                        </div>
+                        <button id="close">Close!</button>
+                    </div>
+            
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+<script src="game_script.js"></script>
+</html>

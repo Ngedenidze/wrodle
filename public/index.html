@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+    
+
+
+            <div id="main">
+
+                <div id="loginScreen" class="login-screen">
+                    <div class="form">
+                        <span class="title">Login</span>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="input-icon">
+                                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                            <input type="text" id="loginUsername" class="input-field" placeholder="Enter your username">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" class="input-icon">
+                                <path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
+                           <input type="password" id="loginPassword" class="input-field" placeholder="Enter your password">
+                        </div>
+                        
+                        <div class="message"></div>
+                        
+                        <button id="loginBtn" class="btn">Sign In</button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="register-section">
+                        <span class="text">Don't have an account?</span>
+                        <a href="#" id="registerLink" class="register-link">Click here to register</a>
+                    </div>
+                    <div id="error" class="critical"></div>
+                </div>
+
+                <div id="registerScreen" class="hidden">
+                    <div class="form">
+                        <span class="title">Register Account!</span>
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" class="input-icon">
+                                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                            <input type="text" id="registerUsername" class="input-field" placeholder="Enter your username">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" class="input-icon">
+                                <path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
+                            <input type="password" id="registerPassword" class="input-field" placeholder="Enter your password">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512" class="input-icon">
+                            <path d="M192 128c0-17.7 14.3-32 32-32s32 14.3 32 32v7.8c0 27.7-2.4 55.3-7.1 82.5l-84.4 25.3c-40.6 12.2-68.4 49.6-68.4 92v71.9c0 40 32.5 72.5 72.5 72.5c26 0 50-13.9 62.9-36.5l13.9-24.3c26.8-47 46.5-97.7 58.4-150.5l94.4-28.3-12.5 37.5c-3.3 9.8-1.6 20.5 4.4 28.8s15.7 13.3 26 13.3H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H460.4l18-53.9c3.8-11.3 .9-23.8-7.4-32.4s-20.7-11.8-32.2-8.4L316.4 198.1c2.4-20.7 3.6-41.4 3.6-62.3V128c0-53-43-96-96-96s-96 43-96 96v32c0 17.7 14.3 32 32 32s32-14.3 32-32V128zm-9.2 177l49-14.7c-10.4 33.8-24.5 66.4-42.1 97.2l-13.9 24.3c-1.5 2.6-4.3 4.3-7.4 4.3c-4.7 0-8.5-3.8-8.5-8.5V335.6c0-14.1 9.3-26.6 22.8-30.7zM24 368c-13.3 0-24 10.7-24 24s10.7 24 24 24H64.3c-.2-2.8-.3-5.6-.3-8.5V368H24zm592 48c13.3 0 24-10.7 24-24s-10.7-24-24-24H305.9c-6.7 16.3-14.2 32.3-22.3 48H616z"/></svg>
+                            <input type="text" id="registerName" class="input-field" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" class="input-icon">
+                            <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+                            <input type="email" id="registerEmail" class="input-field" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="message"></div>
+                        
+                        <button id="registerBtn" class="btn">Sign Up</button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div>
+                        <span class="text">Already have an account?</span>
+                        <a href="#" id="loginLink" class="register-link">Click here to log in</a>
+                    </div>
+                </div>
+                
+
+                <div id="homeScreen" class="hidden">
+                    Welcome <span id="name"></span>!
+                    <div>
+                        Click <a href="#" id="logoutLink">here</a> to log out.
+                    </div>
+                    <hr>
+                    Username: <span id="username"></span>
+                    <div class="form">
+                        Name: <input type="text" id="updateName">
+                        Email: <input type="email" id="updateEmail">
+                        <span></span>
+                        <button id="updateBtn">Update My Information</button>
+                        <span></span>
+                        <button id="deleteBtn" class="critical">Delete My Profile</button>
+                    </div>
+                    
+
+
+
+                    <hr>
+                    Here's the current list of users on our social:
+                    <div id="userlist"></div>
+                </div>
+
+            </div>
+
+            <div id="error" class="critical"></div>
+
+    
+
+    </body>
+    <script src="script.js"></script>
+</html>
