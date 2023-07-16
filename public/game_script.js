@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function getUserInformation() {
     // get the token from local storage
     const token = localStorage.getItem('token');
-    fetch(`/users/${token}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/users/${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -289,7 +289,7 @@ $('#updateBtn').addEventListener('click', () => {
     // otherwise, if doc.ok,
     // alert("Your name and email have been updated.");
     // use .catch(err=>showError('ERROR: '+err)}) to show any other errors
-    fetch(`/users/${$('#username').innerText}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/users/${$('#username').innerText}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

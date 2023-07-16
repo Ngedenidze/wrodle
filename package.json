@@ -15,5 +15,8 @@
     "mongodb": "^5.7.0",
     "mongoimport": "^1.0.6",
     "nedb-promises": "^6.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0"
   }
 }

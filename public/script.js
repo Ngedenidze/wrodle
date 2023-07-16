@@ -1,8 +1,3 @@
-
-//Nika Gedenidze
-//FINAL PROJECT
-//USER LOGIN SCRIPTS
-
 'use strict';
 
 // on load
@@ -32,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       password: loginPassword,
     };
 
-    fetch(`/login`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -69,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       email: registerEmail,
     };
 
-    fetch('/users', {
+    fetch('https://us-central1-wrodle-30466.cloudfunctions.net/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
