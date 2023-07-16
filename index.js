@@ -3,15 +3,30 @@
 //BACKEND SCRIPTS
 //FINAL PROJECT
   const express = require('express');
-  const nedb = require("nedb-promises");
+  const { MongoClient } = require('mongodb');
   const bcrypt = require('bcryptjs');
   const jwt = require('jsonwebtoken');
+  require('dotenv').config();
 
 
   //init app and db
   const app = express();
-  const db = nedb.create('users.jsonl');
+  // init database url
   
+  
+  
+  const secretKey = process.env.SECRET_KEY;
+  const user = encodeURIComponent(process.env.DB_USER);
+  const password = encodeURIComponent(process.env.DB_PASSWORD);
+  const url = `mongodb+srv://${user}:${password}${process.env.DB_URL}?retryWrites=true&w=majority`;
+  
+    // connect to database
+    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((client) => {
+      console.log('Connected to Database')
+      db = client.db('logininfo') 
+    })
+    .catch((error) => console.error(error));
 
   // enable static routing to "./public" folder
   app.use(express.static('public'));
@@ -20,15 +35,12 @@
   // automatically decode all requests from JSON and encode all responses into JSON
   app.use(express.json());
 
-  // secret token
-  const secretKey = process.env.SECRET_KEY || 'SecretKey';
 
   // information route
-  app.post('information', requireAuth, async (req, res) => {
+  app.post('/information', requireAuth, async (req, res) => {
     try {
       // get user information(username)
-      const doc = await db.findOne({ username: req.body.username });
-      console.log('User document 3:', doc);
+      const doc = await db.collection('users').findOne({ username: req.body.username });
       // error checking - 404
       if (!doc) {
         return res.status(404).send({ error: 'Username not found.' });
@@ -49,8 +61,7 @@
       const token = req.params.auth;
       const decodedToken = jwt.verify(token, secretKey);
       // after token authentication get username
-      const doc = await db.findOne({ username: decodedToken.username });
-      console.log('User document 4:', doc);
+      const doc = await db.collection('users').findOne({ username: decodedToken.username });
   
       if (!doc) {
         return res.status(404).send({ error: 'User not found.' });
@@ -66,13 +77,12 @@
   // route to POST /login upon user clicking loginBtn
   app.post('/login', async (req, res) => {
     // get user information(username)
-    const doc = await db.findOne({ username: req.body.username });
-    console.log('User document 1:', doc);
+    const doc = await db.collection('users').findOne({ username: req.body.username });
     // error checking - 404
     if (!doc) {
       return res.status(404).send({ error: 'Username not found.' });
     }
-
+    
     // compared hash password
     const enteredPassword = req.body.password;
     const passwordMatches = bcrypt.compareSync(enteredPassword, doc.password);
@@ -89,7 +99,7 @@
       // authenticate with token
       const authenticationToken = jwt.sign({ username: req.body.username }, secretKey);
 
-      await db.update({ username: req.body.username },
+      await db.collection('users').updateOne({ username: req.body.username },
         {
           // update the token
           $set: { auth: authenticationToken }
@@ -118,7 +128,7 @@
 
     // try-catch
     try {
-      const doc = await db.findOne({ username: req.body.username });
+      const doc = await db.collection('users').findOne({ username: req.body.username });
       if (doc) {
         res.status(409).send({ error: 'Username already exists.' });
       } else {
@@ -129,7 +139,7 @@
 
         // store the hashed password and authentication token in the database
         const user = { username, password: hashedPassword, email, name, auth: authenticationToken };
-        const result = await db.insertOne(user);
+        const result = await db.collection('users').insertOne(user);
         res.send({ user: user, ...result });
       }
     } catch (error) {
@@ -143,7 +153,7 @@
 
   app.delete('/logout/:username', async (req, res) => {
     const { username } = req.params;
-    const doc = await db.findOne({ username });
+    const doc = await db.collection('users').findOne({ username });
   
     // error checking
     if (!doc) {
@@ -151,7 +161,7 @@
     }
   
     // update the user's record to remove the authentication token.
-    await db.updateOne({ username }, { $unset: { auth: "" } });
+    await db.collection('users').updateOne({ username }, { $unset: { auth: "" } });
   
     // send a success message
     res.status(200).send({ message: 'Logged out successfully.' });
@@ -172,7 +182,7 @@
     const updateData = { ...req.body };
     delete updateData.username;
 
-    let doc = await db.findOne({ username });
+    let doc = await db.collection('users').findOne({ username });
     // error checking - 404
     if (!doc) {
       return res.status(404).send({ error: 'User not found.' });
@@ -185,14 +195,14 @@
       }
 
       // update method
-      db.updateOne(
+      db.collection('users').updateOne(
         { username }, // find doc with given :username
         { $set: updateData } // update it with new data
       ).then(async result => {
         if (result.matchedCount == 0)
           res.status(400).send({ error: 'Something went wrong.' });
         else
-          {doc = await db.findOne({ username });  // Fetch the updated document
+          {doc = await db.collection('users').findOne({ username });  // Fetch the updated document
           res.send({ ok: true, name: doc.name });}
       })
         .catch(error => res.send({ error: error.message }));
@@ -208,7 +218,7 @@
   //   use .catch(error=>res.send({error})) to catch and send other errors
   app.delete('/users/:username', async (req, res) => {
     const { username } = req.params;
-    const doc = await db.findOne({ username });
+    const doc = await db.collection('users').findOne({ username });
   
     if (!doc) {
       return res.status(404).send({ error: 'User not found.' });
@@ -224,7 +234,7 @@
         return res.status(403).send({ error: 'Invalid authentication token.' });
       }
   
-      db.deleteOne({ username })
+      db.collection('users').deleteOne({ username })
         .then(result => {
           if (result.deletedCount == 0)
             res.status(400).send({ error: 'Could not delete user.' });
@@ -239,8 +249,6 @@
   function requireAuth(req, res, next) {
     // check with header bearer token
     const authHeader = req.headers.authorization;
-    console.log(authHeader);
-
     // check if authorization header is missing
     if (!authHeader) {
       return res.status(401).send('Unauthorized');
