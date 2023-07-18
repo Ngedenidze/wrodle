@@ -2,7 +2,7 @@
   "name": "Wrodle",
   "version": "1.0.0",
   "description": "Wordle app using Express 4",
-  "main": "index.js",
+  "main": "functions/index.js",
   "scripts": {
     "start": "node index.js"
   },

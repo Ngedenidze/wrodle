@@ -1,7 +1,4 @@
-
-// Nika Gedenidze
-//WORDLE GAME SCRIPTS
-//FINAL PROJECT
+//doc
 const $ = document.querySelector.bind(document);
 // constants and variables
 const open = document.getElementById("open");
@@ -10,14 +7,12 @@ const modal_container = document.getElementById('modal_container');
 const close = document.getElementById('close');
 const root = document.getElementById('root');
 const game_containter = document.getElementById('game_container');
-var WORD_TO_GUESS = "GUESS";
 const different_words = ["FIELD", "BEGIN", "SOLVE", "LANDS", "STICK"];
 const words_level = 0;
 var correct_position = []
 var correct_letter = []
 var array_of_words;
 var in_level = 0;
-
 
 // get information and authorization on load
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function getUserInformation() {
     // get the token from local storage
     const token = localStorage.getItem('token');
-    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/users/${token}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/function/users/${token}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -289,7 +284,7 @@ $('#updateBtn').addEventListener('click', () => {
     // otherwise, if doc.ok,
     // alert("Your name and email have been updated.");
     // use .catch(err=>showError('ERROR: '+err)}) to show any other errors
-    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/users/${$('#username').innerText}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/function/users/${$('#username').innerText}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -321,7 +316,7 @@ $('#deleteBtn').addEventListener('click', () => {
     // otherwise, openLoginScreen()
     // use .catch(err=>showError('ERROR: '+err)}) to show any other errors'
     // sending token with header
-    fetch(`/users/${username}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/function/users/${username}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -345,7 +340,7 @@ $('#deleteBtn').addEventListener('click', () => {
 $('#logoutLink').addEventListener('click', () => {
     const username = $('#username').innerText;
 
-    fetch(`/logout/${username}`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/function/logout/${username}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

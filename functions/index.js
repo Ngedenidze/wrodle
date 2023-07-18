@@ -7,19 +7,16 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors");
 
-
 // init app and db
 const app = express();
 // init database url
 
-app.use(cors());
 const user = functions.config().myenv.db_user;
 const password = functions.config().myenv.db_password;
 const secretKey = functions.config().myenv.secret_key;
 const DB_URL = functions.config().myenv.db_url;
 
 const url = `mongodb+srv://${user}:${password}${DB_URL}?retryWrites=true&w=majority`;
-
 
 // firebase admin init
 admin.initializeApp();
@@ -39,6 +36,9 @@ const getDatabase = async () => {
 
 // enable static routing to "./public" folder
 app.use(express.static("public"));
+// cors init
+app.use(cors({origin: true}));
+app.options("*", cors());
 
 // automatically decode all requests from JSON
 // and encode all responses into JSON
@@ -77,7 +77,7 @@ app.get("/users/:auth", async (req, res) => {
     // send info
     res.send({auth: doc.auth, user: doc.name, username: doc.username});
   } catch (error) {
-    return res.redirect("/index.html");
+    res.status(302).redirect("/index.html");
   }
 });
 
@@ -92,7 +92,7 @@ app.post("/login", async (req, res) => {
     return res.status(404).send({error: "Username not found."});
   }
 
-  // compared hash password
+  // compare hash password
   const enteredPassword = req.body.password;
   const passwordMatches = bcrypt.compareSync(enteredPassword, doc.password);
 
@@ -108,8 +108,10 @@ app.post("/login", async (req, res) => {
       $set: {auth: authenticationToken},
     });
     // send token on res with updated user information
-    res.send({auth: authenticationToken,
-      user: doc.user, username: doc.username});
+    res.send({
+      auth: authenticationToken,
+      user: doc.user, username: doc.username,
+    });
   }
 });
 
@@ -126,38 +128,44 @@ app.post("/login", async (req, res) => {
 app.post("/users", async (req, res) => {
   const {username, password, email, name} = req.body;
 
-  // check if all required fields are present
   if (!username || !password || !email || !name) {
     return res.status(400).json({error: "Missing fields."});
   }
 
-  // try-catch
   try {
     const db = await getDatabase();
+    console.log(db);
     const doc = await db.collection("users").
         findOne({username: req.body.username});
     if (doc) {
       res.status(409).send({error: "Username already exists."});
     } else {
-      // hash the password using bcrypt
       const hashedPassword = await bcrypt.hash(password, 2);
-      // generate an authentication token
       const authenticationToken = jwt.sign({username}, secretKey);
 
-      // store the hashed password and authentication token in the database
       const user = {
         username,
         password: hashedPassword,
         email,
         name,
-        auth: authenticationToken};
-      const result = await db.collection("users").insertOne(user);
-      res.send(result.ops[0]);
+        auth: authenticationToken,
+      };
+      const result = await db.collection("users").
+          insertOne(user);
+      console.log(result);
+
+      if (result && result.insertedId) {
+        res.send(user);
+      } else {
+        throw new Error("Insert operation returned an unexpected result");
+      }
     }
   } catch (error) {
-    res.status(500).send({error});
+    console.error(error);
+    res.status(500).send({error: error.toString()});
   }
 });
+
 
 // Logout
 // TODO: do it with delete
@@ -297,4 +305,4 @@ app.all("*", (req, res) => {
 // app.listen(process.env.PORT || 3000, () =>
 // console.log(`Server started on ${process.env.PORT || 3000}`));
 
-exports.app = functions.https.onRequest(app);
+exports.function = functions.https.onRequest(app);

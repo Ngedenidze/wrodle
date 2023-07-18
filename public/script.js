@@ -1,6 +1,6 @@
 'use strict';
 
-// on load
+// on content load
 document.addEventListener('DOMContentLoaded', () => {
   const $ = document.querySelector.bind(document);
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       password: loginPassword,
     };
 
-    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/login`, {
+    fetch(`https://us-central1-wrodle-30466.cloudfunctions.net/function/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       email: registerEmail,
     };
 
-    fetch('https://us-central1-wrodle-30466.cloudfunctions.net/users', {
+    fetch('https://us-central1-wrodle-30466.cloudfunctions.net/function/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -93,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openHomeScreen(doc) {
-    console.log(doc);
     const token = doc.auth;
     localStorage.setItem('token', token);
     window.location.href = "/game.html";
