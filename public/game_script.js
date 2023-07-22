@@ -2,9 +2,12 @@
 const $ = document.querySelector.bind(document);
 // constants and variables
 const open = document.getElementById("open");
+const rules = document.getElementById("rules");
 const restart = document.getElementById("restart");
-const modal_container = document.getElementById('modal_container');
+const rules_container = document.getElementById('rules_container');
+const settings_container = document.getElementById('settings_container');
 const close = document.getElementById('close');
+const close_settings = document.getElementById('close_settings');
 const root = document.getElementById('root');
 const game_containter = document.getElementById('game_container');
 const different_words = ["FIELD", "BEGIN", "SOLVE", "LANDS", "STICK"];
@@ -74,12 +77,12 @@ switch (sessionStorage.getItem('level')) {
 
 
 // level display
-var heading = $(".modal_heading");
+var heading = $(".title");
 if (heading !== null) {
     heading.innerHTML = "Word Number " + (in_level + 1);
 }
 
-// fetching the words
+// fetching the words   
 // fetch https://raw.githubusercontent.com/charlesreid1/five-letter-words/master/sgb-words.txt
 try {
     jQuery.get('https://raw.githubusercontent.com/charlesreid1/five-letter-words/master/sgb-words.txt', function (data) {
@@ -91,20 +94,42 @@ catch (error) {
     console.error(error);
 };
 
+
 //MODALS
-if (open || close) {
-    open.addEventListener('click', () => {
-        modal_container.classList.add('popup');
+if (rules || close) {
+    rules.addEventListener('click', () => {
+        rules_container.classList.add('popup');
+        settings_container.classList.add('hidden');
         root.classList.add('blured');
     });
     close.addEventListener('click', () => {
-        modal_container.classList.remove('popup');
+        rules_container.classList.remove('popup');
+        settings_container.classList.remove('hidden');
+        root.classList.remove('blured');
+    });
+    rules.addEventListener('keydown', (event) => {
+        var key = event.key;
+        if (key == "Escape") {
+            rules_container.classList.remove('popup');
+            root.classList.remove('blured');
+        }
+    });
+};
+if(open || close_settings){
+    open.addEventListener('click', () => {
+        settings_container.classList.add('popup');
+        rules_container.classList.add('hidden');
+        root.classList.add('blured');
+    });
+    close_settings.addEventListener('click', () => {
+        rules_container.classList.remove('hidden');
+        settings_container.classList.remove('popup');
         root.classList.remove('blured');
     });
     open.addEventListener('keydown', (event) => {
         var key = event.key;
         if (key == "Escape") {
-            modal_container.classList.remove('popup');
+            settings_container.classList.remove('popup');
             root.classList.remove('blured');
 
         }
@@ -348,7 +373,7 @@ $('#logoutLink').addEventListener('click', () => {
     })
     .then(response => {
         if (response.ok) {
-            modal_container.classList.remove('popup');
+            rules_container.classList.remove('popup');
             root.classList.remove('blured');
             localStorage.removeItem('token');
             window.location.href = "/index.html";
