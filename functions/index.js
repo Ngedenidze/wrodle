@@ -206,7 +206,7 @@ app.patch("/users/:username", async (req, res) => {
     return res.status(404).send({error: "User not found."});
   }
   // authenticate with token
-  jwt.verify(doc.auth, secretKey, (err, user) => {
+  jwt.verify(doc.auth, secretKey, (err) => {
     // error checking - 403
     if (err) {
       return res.status(403).send({error: "Invalid authentication token."});
@@ -250,7 +250,7 @@ app.delete("/users/:username", async (req, res) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  jwt.verify(token, secretKey, (err, user) => {
+  jwt.verify(token, secretKey, (err) => {
     if (err) {
       return res.status(403).send({error: "Invalid authentication token."});
     }
